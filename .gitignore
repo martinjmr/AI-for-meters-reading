@@ -1,0 +1,38 @@
+# Data and models
+*.pt
+*.pth
+pictures/
+crops/
+aligned/
+final_crops/
+*.csv
+!requirements.txt
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+.env
+venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# OS
+.DS_Store
+Thumbs.db
+
+# YOLO training
+runs/
+YOLOv8_crop_runs/
+YOLOv8_align_runs/
