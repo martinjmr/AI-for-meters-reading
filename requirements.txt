@@ -2,10 +2,10 @@ ultralytics
 torch
 torchvision
 opencv-python
+easyocr
 pandas
 matplotlib
 tqdm
 pillow
 numpy
-shutil
 pyyaml
