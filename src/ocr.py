@@ -19,7 +19,7 @@ logger = logging.getLogger(__name__)
 class MeterOCR:
     """Wrapper for EasyOCR with meter-specific configuration."""
 
-    def __init__(self, languages: List[str] | None = None, use_gpu: bool = True):
+    def __init__(self, languages: Optional[List[str]] = None, use_gpu: bool = True):
         """Initialize OCR reader.
 
         Args:

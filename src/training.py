@@ -1,7 +1,7 @@
 """Training utilities for digit recognition models."""
 
 import logging
-from typing import Tuple
+from typing import Tuple, Optional
 
 import matplotlib.pyplot as plt
 import torch
@@ -116,7 +116,7 @@ def evaluate_exact_accuracy(model: nn.Module,
 
 
 def plot_training_history(train_losses: list, val_losses: list,
-                         save_path: str | None = None) -> None:
+                         save_path: Optional[str] = None) -> None:
     """Plot training and validation loss curves.
 
     Args:

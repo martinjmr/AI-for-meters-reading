@@ -3,7 +3,7 @@
 import os
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Dict
+from typing import Dict, Optional
 
 
 @dataclass
@@ -15,8 +15,8 @@ class DataConfig:
     crops_dir: Path
     aligned_dir: Path
     final_crops_dir: Path
-    labels_csv: Path | None = None
-    submission_csv: Path | None = None
+    labels_csv: Optional[Path] = None
+    submission_csv: Optional[Path] = None
     final_size: tuple[int, int] = (128, 384)
 
     def __post_init__(self):

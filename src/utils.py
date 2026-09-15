@@ -2,7 +2,7 @@
 
 import logging
 import math
-from typing import Tuple
+from typing import Tuple, Optional
 
 import cv2
 import numpy as np
@@ -84,7 +84,7 @@ def hsv_range_mask(image: np.ndarray,
     return (mask_low | mask_high) & (s >= sat_thresh)
 
 
-def load_image_safe(image_path: str) -> np.ndarray | None:
+def load_image_safe(image_path: str) -> Optional[np.ndarray]:
     """Load image safely with error handling.
 
     Args:
