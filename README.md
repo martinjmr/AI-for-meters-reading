@@ -6,24 +6,23 @@ With my team, I built a pipeline that reads the consumption (m³) of water meter
 |---|---|---|
 | 1. Dial detection | YOLOv8 trained on 150 photos annotated in Roboflow, then retrained on 320 automatically cropped dials | 760 / 793 photos cropped (95.8%) |
 | 2. Alignment | YOLOv8 locating the black and red reference boxes, then rotation | 585 dials aligned (77% of the crops) |
-| 3. Digit reading | EasyOCR (pre-trained) on the black integer digits, keeping the last three | 28.4% of meters read exactly (public test set) |
+| 3. Digit reading | EasyOCR (pre-trained) on the black integer digits, keeping the last three | 21.15% of meters read exactly (private test set, final ranking) |
 
 The counts come from the output folders of the project. In a random sample of 60 crops, all 60 show the dial. Detection works on almost every photo, alignment loses about a quarter of the dials, and reading the digits is the bottleneck.
 
 ## Challenge leaderboard
 
-The challenge is SUEZ's [AI for Meter Reading](https://challengedata.ens.fr/challenges/30) on Challenge Data. A reading counts as correct when its last three cubic-meter digits are exact; the score is the share of correct readings. The test set is split into a public part and a private part, which gives the final ranking.
+The challenge is SUEZ's [AI for Meter Reading](https://challengedata.ens.fr/challenges/30) on Challenge Data. A reading counts as correct when its last three cubic-meter digits are exact; the score is the share of correct readings. The final ranking is computed on the private part of the test set.
 
 | Test set | Our score | Organisers' benchmark | Rank |
 |---|---|---|---|
-| Public | 28.37% | 22.60% | 15th of 35 |
 | Private (final) | 21.15% | 16.35% | 15th of 35 |
 
 ## Why a pre-trained OCR
 
 | Model | Result |
 |---|---|
-| EasyOCR, pre-trained | 28.4% of meters read exactly (public test set) |
+| EasyOCR, pre-trained | 21.15% of meters read exactly (private test set) |
 | Custom CNN (3 convolutional blocks, one head per digit) | Exact 3-digit accuracy 0.68% |
 | ResNet18, fine-tuned | Overfitted, not kept |
 
