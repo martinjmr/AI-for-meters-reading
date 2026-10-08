@@ -1,5 +1,7 @@
 """Image preprocessing functions for meter reading."""
 
+from __future__ import annotations
+
 import logging
 import os
 from pathlib import Path

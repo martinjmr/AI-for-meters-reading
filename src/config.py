@@ -1,9 +1,11 @@
 """Configuration for AI Meter Reading project."""
 
+from __future__ import annotations
+
 import os
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Dict, Optional
+from typing import Dict, List, Optional
 
 
 @dataclass
@@ -32,8 +34,8 @@ class YOLOConfig:
     yaml_path: Path
     train_images_dir: Path
     val_images_dir: Path
-    class_names: list[str]
-    weights_path: Path | None = None
+    class_names: List[str]
+    weights_path: Optional[Path] = None
     epochs: int = 30
     imgsz: int = 640
     batch: int = 8

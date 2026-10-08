@@ -1,12 +1,12 @@
 # AI for Meter Reading
 
-With my team, I built a pipeline that reads the consumption (m³) of water meters from field photos: dial detection with YOLOv8, geometric alignment, then OCR. Computer-vision challenge of the L3 IASO program (Université Paris Dauphine-PSL), on Challenge Data.
+With my team, I built a pipeline that reads the consumption (m³) of water meters from field photos: dial detection with YOLOv8, geometric alignment, then OCR. Computer-vision challenge of the IASO bachelor's programme (Université Paris Dauphine-PSL, June 2025), on Challenge Data.
 
 | Stage | Method | Result |
 |---|---|---|
 | 1. Dial detection | YOLOv8 trained on 150 photos annotated in Roboflow, then retrained on 320 automatically cropped dials | 760 / 793 photos cropped (95.8%) |
 | 2. Alignment | YOLOv8 locating the black and red reference boxes, then rotation | 585 dials aligned (77% of the crops) |
-| 3. Digit reading | EasyOCR (pre-trained) on the 3-digit black band | 28.4% of meters read exactly (public test set) |
+| 3. Digit reading | EasyOCR (pre-trained) on the black integer digits, keeping the last three | 28.4% of meters read exactly (public test set) |
 
 The counts come from the output folders of the project. In a random sample of 60 crops, all 60 show the dial. Detection works on almost every photo, alignment loses about a quarter of the dials, and reading the digits is the bottleneck.
 
@@ -27,14 +27,14 @@ The challenge is SUEZ's [AI for Meter Reading](https://challengedata.ens.fr/chal
 | Custom CNN (3 convolutional blocks, one head per digit) | Exact 3-digit accuracy 0.68% |
 | ResNet18, fine-tuned | Overfitted, not kept |
 
-With 793 photos, the networks we trained from scratch overfit; a pre-trained OCR generalises much better.
+With 793 photos, the networks we trained overfit, the small CNN trained from scratch as well as the fine-tuned ResNet18; a pre-trained OCR generalises much better.
 
 ## Pipeline
 
 1. **Dial detection.** We annotated 150 photos by hand in Roboflow to train a first YOLOv8 model (one class), then used its 320 cleanest crops to train a second, more robust model. Settings: AdamW, learning rate 0.002, 640×640 images, confidence threshold 0.3.
 2. **Alignment.** A second YOLOv8 model (classes `noir` and `rouge`) finds the black and red boxes; the angle between their centres gives the rotation that brings the digits horizontal.
 3. **Preprocessing.** We remove the red zone (decimals, irrelevant for m³) by HSV thresholding, and letterbox the band to 128×384.
-4. **Reading.** EasyOCR reads the 3-digit black number.
+4. **Reading.** EasyOCR reads the black (integer) digits, and the last three are kept, since the challenge scores the last three cubic-meter digits.
 
 ## Limits and next steps
 
@@ -43,10 +43,10 @@ With 793 photos, the networks we trained from scratch overfit; a pre-trained OCR
 
 ## Repository
 
-- `AI_for_meter_reading_clean.ipynb`: the full pipeline, step by step (in French)
+- `AI_for_meter_reading_clean.ipynb`: the pipeline step by step (in French), reconstructed after the project from the team's working notebooks and not rerun end to end
 - `src/`: the same steps as functions (preprocessing, OCR wrapper, CNN baselines)
 - `scripts/infer.py`: runs the pipeline on a folder of photos
-- `images/`: ten sample photos at three stages (raw, cropped dial, final band)
+- `images/`: ten sample photos at three stages (raw photo, cropped dial, last three digits)
 
 The challenge dataset and the trained YOLO weights are not included. With your own weights, from the repository root:
 
@@ -57,4 +57,4 @@ python -m scripts.infer path/to/photos --crop-weights crop.pt --align-weights al
 
 ## Team
 
-I built this with my team for the L3 IASO computer-vision challenge at Université Paris Dauphine-PSL.
+I built this with my team for the computer-vision challenge of the IASO bachelor's programme at Université Paris Dauphine-PSL, in June 2025.

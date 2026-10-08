@@ -1,5 +1,7 @@
 """Utility functions for image processing and geometry calculations."""
 
+from __future__ import annotations
+
 import logging
 import math
 from typing import Tuple, Optional

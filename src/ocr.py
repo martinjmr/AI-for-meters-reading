@@ -56,9 +56,10 @@ class MeterOCR:
             # Extract only digits
             digits_only = re.sub(r"\D", "", raw)
 
-            # Truncate or pad with zeros
+            # Keep the last n_digits (the challenge scores the last three cubic-meter digits),
+            # or pad with zeros
             if len(digits_only) > n_digits:
-                digits_only = digits_only[:n_digits]
+                digits_only = digits_only[-n_digits:]
             else:
                 digits_only = digits_only.zfill(n_digits)
 
@@ -87,7 +88,7 @@ def read_digits(image_path: str, reader: easyocr.Reader, n_digits: int = 3) -> s
         result = reader.readtext(img, detail=0)
         raw = result[0] if result else ""
         digits_only = re.sub(r"\D", "", raw)
-        digits_only = digits_only[:n_digits] if len(digits_only) > n_digits else digits_only
+        digits_only = digits_only[-n_digits:] if len(digits_only) > n_digits else digits_only  # last three m³ digits
         return digits_only.zfill(n_digits)
     except Exception as e:
         logger.error(f"Error reading {image_path}: {e}")
