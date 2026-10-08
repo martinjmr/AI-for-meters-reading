@@ -1,6 +1,6 @@
 # AI for Meter Reading
 
-With my team, I built a pipeline that reads the consumption (m³) of water meters from field photos: dial detection with YOLOv8, geometric alignment, then OCR. Computer-vision challenge of the L3 IASO program (Université Paris Dauphine-PSL), **ranked 2nd in the cohort**.
+With my team, I built a pipeline that reads the consumption (m³) of water meters from field photos: dial detection with YOLOv8, geometric alignment, then OCR. Computer-vision challenge of the L3 IASO program (Université Paris Dauphine-PSL), on Challenge Data.
 
 | Stage | Method | Result |
 |---|---|---|
