@@ -54,7 +54,3 @@ The challenge dataset and the trained YOLO weights are not included. With your o
 pip install -r requirements.txt
 python -m scripts.infer path/to/photos --crop-weights crop.pt --align-weights align.pt --output results/
 ```
-
-## Team
-
-I built this with my team for the computer-vision challenge of the IASO bachelor's programme at Université Paris Dauphine-PSL, in June 2025.
