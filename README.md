@@ -1,6 +1,6 @@
 # AI for Meter Reading
 
-Reading the consumption (m³) of water meters from field photos: dial detection with YOLOv8, geometric alignment, then OCR. Team project for a computer-vision challenge in the L3 IASO program (Université Paris Dauphine-PSL), **ranked 2nd in the cohort**.
+With my team, I built a pipeline that reads the consumption (m³) of water meters from field photos: dial detection with YOLOv8, geometric alignment, then OCR. Computer-vision challenge of the L3 IASO program (Université Paris Dauphine-PSL), **ranked 2nd in the cohort**.
 
 | Stage | Method | Result |
 |---|---|---|
@@ -18,13 +18,13 @@ Detection and alignment work; reading the digits is the bottleneck.
 | Custom CNN (3 convolutional blocks, one head per digit) | Exact 3-digit accuracy 0.68% |
 | ResNet18, fine-tuned | Overfitted, not kept |
 
-With 795 photos, networks trained from scratch overfit; a pre-trained OCR generalises much better.
+With 795 photos, the networks we trained from scratch overfit; a pre-trained OCR generalises much better.
 
 ## Pipeline
 
-1. **Dial detection.** 150 photos annotated by hand in Roboflow trained a first YOLOv8 model (one class). Its 320 cleanest crops trained a second, more robust model. Settings: AdamW, learning rate 0.002, 640×640 images, confidence threshold 0.3.
+1. **Dial detection.** We annotated 150 photos by hand in Roboflow to train a first YOLOv8 model (one class), then used its 320 cleanest crops to train a second, more robust model. Settings: AdamW, learning rate 0.002, 640×640 images, confidence threshold 0.3.
 2. **Alignment.** A second YOLOv8 model (classes `noir` and `rouge`) finds the black and red boxes; the angle between their centres gives the rotation that brings the digits horizontal.
-3. **Preprocessing.** The red zone (decimals, irrelevant for m³) is removed by HSV thresholding, and the band is letterboxed to 128×384.
+3. **Preprocessing.** We remove the red zone (decimals, irrelevant for m³) by HSV thresholding, and letterbox the band to 128×384.
 4. **Reading.** EasyOCR reads the 3-digit black number.
 
 ## Limits and next steps
@@ -48,4 +48,4 @@ python -m scripts.infer path/to/photos --crop-weights crop.pt --align-weights al
 
 ## Team
 
-Built as a team for the L3 IASO computer-vision challenge at Université Paris Dauphine-PSL.
+I built this with my team for the L3 IASO computer-vision challenge at Université Paris Dauphine-PSL.
