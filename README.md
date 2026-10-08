@@ -4,21 +4,21 @@ With my team, I built a pipeline that reads the consumption (m³) of water meter
 
 | Stage | Method | Result |
 |---|---|---|
-| 1. Dial detection | YOLOv8 trained on 150 photos annotated in Roboflow, then retrained on 320 automatically cropped dials | 726 / 795 photos cropped (91.3%) |
-| 2. Alignment | YOLOv8 locating the black and red reference boxes, then rotation | 720 / 726 dials aligned (99.2%) |
-| 3. Digit reading | EasyOCR (pre-trained) on the 3-digit black band | Submission score ≈ 0.284 |
+| 1. Dial detection | YOLOv8 trained on 150 photos annotated in Roboflow, then retrained on 320 automatically cropped dials | 760 / 793 photos cropped (95.8%) |
+| 2. Alignment | YOLOv8 locating the black and red reference boxes, then rotation | 585 dials aligned (77% of the crops) |
+| 3. Digit reading | EasyOCR (pre-trained) on the 3-digit black band | Submission score 0.284 |
 
-Detection and alignment work; reading the digits is the bottleneck.
+The counts come from the output folders of the project. In a random sample of 60 crops, all 60 show the dial. Detection works on almost every photo, alignment loses about a quarter of the dials, and reading the digits is the bottleneck.
 
 ## Why a pre-trained OCR
 
 | Model | Result |
 |---|---|
-| EasyOCR, pre-trained | Submission score ≈ 0.284 |
+| EasyOCR, pre-trained | Submission score 0.284 |
 | Custom CNN (3 convolutional blocks, one head per digit) | Exact 3-digit accuracy 0.68% |
 | ResNet18, fine-tuned | Overfitted, not kept |
 
-With 795 photos, the networks we trained from scratch overfit; a pre-trained OCR generalises much better.
+With 793 photos, the networks we trained from scratch overfit; a pre-trained OCR generalises much better.
 
 ## Pipeline
 
@@ -29,7 +29,7 @@ With 795 photos, the networks we trained from scratch overfit; a pre-trained OCR
 
 ## Limits and next steps
 
-- The 795 photos are often blurred, rotated or taken from far away, and the rotation step degrades on the worst ones.
+- The 793 photos are often blurred, rotated or taken from far away. The alignment step needs both reference boxes and fails on 175 of the 760 crops.
 - Next steps: segment and read the digits one by one, augment the data (rotation, blur, noise), fine-tune the OCR on meter digits.
 
 ## Repository
